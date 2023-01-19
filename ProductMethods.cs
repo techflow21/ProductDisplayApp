@@ -1,13 +1,15 @@
-﻿namespace ProductDisplayApp
+﻿using System.Dynamic;
+
+namespace ProductDisplayApp
 {
     internal class ProductMethods
     {
-        private List<Product> products = new List<Product>();
-
-        public void AddProduct(Product product)
+        private List<Product> products = new List<Product>()
         {
-            products.Add(product);
-        }
+            new Product { Id = 1, Name = "Dell Xps", Quantity = 30, Price = 2300.5, Category = "PCs", OrderCount = 100 },
+            new Product { Id = 2, Name = "Ergonomic Chair", Quantity = 40, Price = 840, Category = "Chairs", OrderCount = 400 },
+            new Product { Id = 3, Name = "Table", Quantity = 10, Price = 290.65, Category = "Tables", OrderCount = 300 }
+        };
 
         public void ListProducts(string[] properties = null)
         {
@@ -15,73 +17,63 @@
 
             foreach (Product product in products)
             {
-                foreach (string prop in properties)
+                dynamic productProperty = new ExpandoObject();
+
+                productProperty.Id = product.Id;
+                productProperty.Name = product.Name;
+
+                productProperty.Quantity = product.Quantity;
+                productProperty.Price = product.Price;
+
+                productProperty.Category = product.Category;
+                productProperty.OrderCount = product.OrderCount;
+
+
+                foreach (string property in properties)
                 {
-                    switch (prop)
+                    switch (property)
                     {
                         case "" and "" and "" and "" and "" and "":
-                            Console.WriteLine($"  {product.Id}, {product.Name}, {product.Quantity}, {product.Price}, {product.Category}, {product.OrderCount}");
+                            Console.WriteLine($"  {productProperty.Id}, {productProperty.Name}, {productProperty.Quantity}, {productProperty.Price}, {productProperty.Category}, {productProperty.OrderCount}");
                             break;
 
-                        case "Id":
-                            Console.Write($"  {product.Id},");
+                        case "id":
+                            Console.Write($"  {productProperty.Id},");
                             break;
 
-                        case "Name":
-                            Console.Write($"  {product.Name},");
+                        case "name":
+                            Console.Write($"  {productProperty.Name},");
                             break;
 
-                        case "Quantity":
-                            Console.Write($"  {product.Quantity},");
+                        case "quantity":
+                            Console.Write($"  {productProperty.Quantity},");
                             break;
 
-                        case "Price":
-                            Console.Write($"  ${product.Price},");
+                        case "price":
+                            Console.Write($"  ${productProperty.Price},");
                             break;
 
-                        case "Category":
-                            Console.Write($"  {product.Category},");
+                        case "category":
+                            Console.Write($"  {productProperty.Category},");
                             break;
 
-                        case "OrderCount":
-                            Console.Write($"  {product.OrderCount},");
+                        case "ordercount":
+                            Console.Write($"  {productProperty.OrderCount},");
                             break;
 
                         default:
                             Console.Clear();
 
-                            Console.WriteLine("\n  Invalid Properties entered,try again!");
-                            UserInputMethod();
+                            Console.WriteLine("\n  Invalid Properties entered, try again!");
+                            AppStarter appStarter = new AppStarter();
+
+                            appStarter.UserInputMethod();
                             break;
                     }
                 }
+
                 Console.WriteLine("\n");
-
             }
-        }
-
-
-        public string UserInputMethod()
-        {
-            Console.Write("\n  Enter properties to display (Use comma to seperate if many properties): \n\n  ");
-
-            string input = Console.ReadLine();
-
-            /*string output = "";
-
-            input = input.Replace(" ", "").ToLower();
-
-            string[] words = input.Split(',');
-
-            for (int i = 0; i < words.Length; i++)
-            {
-                words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1);
-                output += words[i] + " ";
-            }
-            return output;
-             */
-
-            return input;
         }
     }
 }
