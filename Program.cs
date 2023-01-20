@@ -1,16 +1,14 @@
-﻿namespace ProductDisplayApp
+﻿using System.Dynamic;
+
+namespace ProductDisplayApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            
-            AppStarter appStarter = new AppStarter();
+            PropertiesInput propertiesInput = new();
 
-            string[] properties = appStarter.UserInputMethod().ToLower().Replace(" ", "").Split(',');
-
-            ProductMethods productMethods = new ProductMethods();
-            productMethods.ListProducts(properties);
+            propertiesInput.UserInput();
         }
     }
 }
