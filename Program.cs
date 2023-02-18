@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
 
-namespace ProductDisplayApp
-{
+namespace ProductDisplayApp;
+
     class Program
     {
         static void Main(string[] args)
@@ -11,4 +11,3 @@ namespace ProductDisplayApp
             propertiesInput.UserInput();
         }
     }
-}
